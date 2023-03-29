@@ -25,8 +25,6 @@ const gameBoard = document.querySelector(".game-board")
 let iconToBoard = "";
 // this is used to determine whose turn it is
 let turn1 = true;
-// this is to try and stop a move from going through if a box is clicked more than once
-let hadGo = true;
 // temporary while I sort out some other features hope to make it so icons change
 const icon1 = "X";
 const icon2 = "O";
@@ -84,3 +82,4 @@ box7.addEventListener("click", move);
 box8.addEventListener("click", move);
 box9.addEventListener("click", move);
 gameBoard.addEventListener("click", start)
+
