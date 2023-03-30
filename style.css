@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+
 * {
   box-sizing: border-box;
 }
@@ -23,8 +26,10 @@ header {
   height: 150px;
   text-align: center;
 }
+
 h1 {
   margin: 20px;
+  font-family: "Pacifico", sans-serif;
 }
 
 .play-again {

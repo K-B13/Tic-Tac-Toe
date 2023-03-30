@@ -5,6 +5,9 @@ class Player {
     this.icon = icon;
    }
 }
+
+const chalk = new Audio("chalk-sound")
+
 // connecting my tiles via the dom.
 const box1 = document.querySelector("#box1");
 const box2 = document.querySelector("#box2");
@@ -92,6 +95,14 @@ const checkTurn = () => {
   }
 } 
 
+const chalkSound = () => {
+  chalk.play()
+  setTimeout(() => {
+      chalk.pause();
+      chalk.currentTime = 0;
+  }, 500)
+}
+
 // function in the event listener which makes the icons appear.
 const move = (e) => {
   let tile = e.target
@@ -100,6 +111,7 @@ const move = (e) => {
     turn()
     checkTurn()
     tile.innerText = iconToBoard
+    chalkSound()
     if(!turn1) {
       p1.push(tileIndex)
       p1 = p1.sort()
