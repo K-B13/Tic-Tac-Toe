@@ -14,10 +14,16 @@ const box5 = document.querySelector("#box5");
 const box6 = document.querySelector("#box6");
 const box7 = document.querySelector("#box7");
 const box8 = document.querySelector("#box8");
-const box9 = document.querySelector("#box9")
+const box9 = document.querySelector("#box9");
+// query selecting useful elements.
 const message = document.querySelector(".message")
 const gameBoard = document.querySelector(".game-board")
 const footerMessage = document.querySelector("footer h2")
+const player1 = document.querySelector("#score1")
+const player2 = document.querySelector("#score2")
+const scoreStat1 = document.querySelector(".score-stat1")
+const scoreStat2 = document.querySelector(".score-stat2")
+const playAgain  = document.querySelector(".play-again")
 
 // declaring to variables
 // this one will be used to change which icon is being submitted
@@ -28,9 +34,14 @@ let turn1 = true;
 const icon1 = "X";
 const icon2 = "O";
 
-let playerArray
+score1 = 0
+score2 = 0
+// this is going to be used in a function that will change the vairable depending on if turn 1 is true or not.
+let player = "";
+
+let playerArray;
 // checking if game over
-let gameOver = false
+
 //recording players moves
 p1 = [];
 p2 = [];
@@ -45,6 +56,20 @@ const winArray = [
   ["3", "4", "5"],
   ["6", "7", "8"],
 ]
+// create button for play again
+again = document.createElement("button");
+playAgain.append(again);
+again.classList.add("replay-button");
+playAgain.classList.add("hidden")
+again.innerText = "Reset";
+// function to change the variable player, this functions purpose is so I have a variable with the name of the player whose turn just went.
+const changePlayer = () => {
+  if(!turn1) {
+    player = player1.innerText;
+  } else {
+    player = player2.innerText;
+  }
+}
 
 //function which changes which icon is being submitted and changes the turn1 and determines which icon is displayed.
 const turn = () => {
@@ -59,6 +84,7 @@ const turn = () => {
 
 //function to change the message at the top of the page
 const checkTurn = () => {
+  changePlayer()
   if (turn1) {
     message.innerText = "It is player 1's turn."
   } else {
@@ -94,16 +120,18 @@ const start = () => {
     checkTurn()
   }
 }
-
-box1.addEventListener("click", move);
-box2.addEventListener("click", move);
-box3.addEventListener("click", move);
-box4.addEventListener("click", move);
-box5.addEventListener("click", move);
-box6.addEventListener("click", move);
-box7.addEventListener("click", move);
-box8.addEventListener("click", move);
-box9.addEventListener("click", move);
+const clickBox = () => {
+  box1.addEventListener("click", move);
+  box2.addEventListener("click", move);
+  box3.addEventListener("click", move);
+  box4.addEventListener("click", move);
+  box5.addEventListener("click", move);
+  box6.addEventListener("click", move);
+  box7.addEventListener("click", move);
+  box8.addEventListener("click", move);
+  box9.addEventListener("click", move);
+}
+clickBox()
 gameBoard.addEventListener("click", start)
 
 let checkWin = false
@@ -127,7 +155,7 @@ const endCheck = () => {
             return check
             })
             if(check) {
-              footerMessage.innerText = "Someone has won"
+              footerMessage.innerText = `${player} has won`
               checkWin = true
               break
             }
@@ -138,9 +166,10 @@ const endCheck = () => {
 // checks if all boxes are filled (well technically checks if p1 has made 5 moves and p2 has made 4 moves)
 const checkDraw = () => {
   if(!checkWin){
-    if(p1.length === 5 && p2.length === 4)
-    footerMessage.innerText = "The game has ended as a draw"
-    return gameOver = true
+    if(p1.length === 5 && p2.length === 4){
+      footerMessage.innerText = "The game has ended as a draw"
+      replay()
+    }
   }
 }
 
@@ -155,5 +184,41 @@ const stopGame = () => {
     box7.removeEventListener("click", move);
     box8.removeEventListener("click", move);
     box9.removeEventListener("click", move);
+    addScore()
+    replay()
   }
 }
+// update the scoreboard based on who has won
+const addScore = () => {
+  if(player === player1.innerText){
+    score1 = score1 + 1
+    scoreStat1.innerText = score1
+  } else {
+    score2 = score2 + 1
+    scoreStat2.innerText = score2
+  }
+}
+
+const replay = () => {
+  playAgain.classList.remove("hidden")
+  again.addEventListener("click", reset)
+  message.innerText = `Click play again to restart`
+}
+
+const reset = () => {
+  clickBox()
+  playAgain.classList.add("hidden")
+  for(i=0; i<= 8; i++){
+    const cleanSlate = document.querySelector(`[data-index = "${i}"]`)
+    cleanSlate.innerText = ""
+  }
+  checkWin = false
+  p1 = []
+  p2 = []
+  footerMessage.innerText = ""
+  message.innerText = "Click a square to begin"
+  turn1 = true;
+  player = ""
+  changePlayer()
+}
+

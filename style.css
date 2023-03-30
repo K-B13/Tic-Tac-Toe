@@ -20,10 +20,28 @@ body {
 }
 
 header {
-  padding: 30px;
   height: 150px;
+  text-align: center;
+}
+h1 {
+  margin: 20px;
 }
 
+.play-again {
+  height: 32px;
+  margin: 10px;
+}
+
+.replay-button{
+  color: white;
+  background-color: black;
+  font-weight: bold;
+  border: none;
+}
+.replay-button:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
 main {
   display: flex;
   justify-content: space-around;
@@ -43,11 +61,10 @@ main {
   background-color: white;
   /* border: 10px dotted white; */
   padding: 0;
-  position: center;
 }
 footer {
-  padding: 30px;
   height: 120px;
+  text-align: center;
 }
 div div{
   width: 90px;
@@ -123,4 +140,8 @@ aside {
 .message {
   height: 60px;
   margin: 0 0 10px 0;
+}
+
+.hidden {
+  display: none;
 }
