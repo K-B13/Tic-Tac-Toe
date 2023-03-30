@@ -34,29 +34,24 @@ main {
 
 .game-board {
   display: grid;
-  grid-template-columns: 80px 80px 80px;
-  grid-template-rows: 80px 80px 80px;
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
+  grid-template-columns: 90px 90px 90px;
+  grid-template-rows: 90px 90px 90px;
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
   height: 300px;
   width: 300px;
-  background-color: whitesmoke;
-  border: 10px dotted white;
+  background-color: white;
+  /* border: 10px dotted white; */
   padding: 0;
+  position: center;
 }
 footer {
   padding: 30px;
   height: 120px;
 }
 div div{
-  width: 80px;
-  height: 80px;
-}
-
-.lines {
-  background-color: black;
-  width: 8px;
-  height: 8px;
+  width: 90px;
+  height: 90px;
 }
 
 aside {
@@ -115,9 +110,10 @@ aside {
   cursor: pointer;
 }
 .playing-tiles:hover {
-  width: 85px;
-  height: 85px;
+  width: 98px;
+  height: 98px;
   position: relative;
+  border: 2px solid white;
 }
 
 .player-icon {

@@ -1,5 +1,3 @@
-console.log("all connected")
-
 // thinking later to make the players custimizable and was going to use classes to accomplish this
 class Player {
    constructor(name, icon){
@@ -12,13 +10,14 @@ const box1 = document.querySelector("#box1");
 const box2 = document.querySelector("#box2");
 const box3 = document.querySelector("#box3");
 const box4 = document.querySelector("#box4");
-const box5 = document.querySelector("#box5")
-const box6 = document.querySelector("#box6")
-const box7 = document.querySelector("#box7")
-const box8 = document.querySelector("#box8")
+const box5 = document.querySelector("#box5");
+const box6 = document.querySelector("#box6");
+const box7 = document.querySelector("#box7");
+const box8 = document.querySelector("#box8");
 const box9 = document.querySelector("#box9")
 const message = document.querySelector(".message")
 const gameBoard = document.querySelector(".game-board")
+const footerMessage = document.querySelector("footer h2")
 
 // declaring to variables
 // this one will be used to change which icon is being submitted
@@ -29,18 +28,32 @@ let turn1 = true;
 const icon1 = "X";
 const icon2 = "O";
 
+let playerArray
+// checking if game over
+let gameOver = false
+//recording players moves
+p1 = [];
+p2 = [];
+//Array of all the winning combinations
+const winArray = [
+  ["0", "1", "2"],
+  ["0", "4", "8"],
+  ["0", "3", "6"],
+  ["1", "4", "7"],
+  ["2", "5", "8"],
+  ["2", "4", "6"],
+  ["3", "4", "5"],
+  ["6", "7", "8"],
+]
+
 //function which changes which icon is being submitted and changes the turn1 and determines which icon is displayed.
 const turn = () => {
   if(turn1){
     iconToBoard = icon1;
-    console.log(iconToBoard);
     turn1 = false;
-    console.log(turn1)
   } else {
     iconToBoard = icon2;
-    console.log(iconToBoard);
     turn1 = true;
-    console.log(turn1)
     }
 }
 
@@ -48,9 +61,7 @@ const turn = () => {
 const checkTurn = () => {
   if (turn1) {
     message.innerText = "It is player 1's turn."
-    console.log(turn1)
   } else {
-    console.log(turn1)
     message.innerText = "It is player 2's turn."
   }
 } 
@@ -58,12 +69,24 @@ const checkTurn = () => {
 // function in the event listener which makes the icons appear.
 const move = (e) => {
   let tile = e.target
+  let tileIndex = tile.getAttribute(["data-index"])
   if (tile.innerText === ""){
     turn()
     checkTurn()
     tile.innerText = iconToBoard
-    
+    if(!turn1) {
+      p1.push(tileIndex)
+      p1 = p1.sort()
+    } else {
+      p2.push(tileIndex)
+      p2 = p2.sort()
+    }
   } 
+  
+  currentPlayer()
+  endCheck()
+  checkDraw()
+  stopGame()
 }
 
 const start = () => {
@@ -83,3 +106,54 @@ box8.addEventListener("click", move);
 box9.addEventListener("click", move);
 gameBoard.addEventListener("click", start)
 
+let checkWin = false
+let check = false
+// adding each players move into a seperate array I plan on using this to ultimatly compare against the win conditions to check to see if someone has won
+const currentPlayer = () => {
+  if(!turn1) {
+    playerArray = p1
+    return playerArray
+  } else {
+    playerArray = p2
+    return playerArray
+  }
+}
+// comparing the player Arrays with the win conditions. Loops through every win condition. If every value in the win condition is found in a player Array then the game ends
+const endCheck = () => {
+  if (playerArray.length > 2) {
+    for(let i = 0; i<winArray.length; i++){
+          winArray[i].every(el => {
+            check =  playerArray.includes(el)
+            return check
+            })
+            if(check) {
+              footerMessage.innerText = "Someone has won"
+              checkWin = true
+              break
+            }
+        }
+      }
+  } 
+
+// checks if all boxes are filled (well technically checks if p1 has made 5 moves and p2 has made 4 moves)
+const checkDraw = () => {
+  if(!checkWin){
+    if(p1.length === 5 && p2.length === 4)
+    footerMessage.innerText = "The game has ended as a draw"
+    return gameOver = true
+  }
+}
+
+const stopGame = () => {
+  if (checkWin) {
+    box1.removeEventListener("click", move);
+    box2.removeEventListener("click", move);
+    box3.removeEventListener("click", move);
+    box4.removeEventListener("click", move);
+    box5.removeEventListener("click", move);
+    box6.removeEventListener("click", move);
+    box7.removeEventListener("click", move);
+    box8.removeEventListener("click", move);
+    box9.removeEventListener("click", move);
+  }
+}
