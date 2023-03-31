@@ -32,6 +32,8 @@ const player2 = document.querySelector("#score2");
 const scoreStat1 = document.querySelector(".score-stat1");
 const scoreStat2 = document.querySelector(".score-stat2");
 const playAgain  = document.querySelector(".play-again");
+const show1 = document.querySelector(".show-icon1")
+const show2 = document.querySelector(".show-icon2")
 
 // declaring to variables
 // this one will be used to change which icon is being submitted
@@ -43,6 +45,13 @@ let turn1 = true;
 // temporary while I sort out some other features hope to make it so icons change
 let icon1 = "X";
 let icon2 = "O";
+
+const displayIcon = () => {
+  display1.innerText = icon1
+  display2.innerText = icon2 
+  show1.innerText = icon1
+  show2.innerText = icon2
+}
 
 score1 = 0
 score2 = 0
@@ -73,7 +82,7 @@ again = document.createElement("button");
 playAgain.append(again);
 again.classList.add("replay-button");
 playAgain.classList.add("hidden")
-again.innerText = "Reset";
+again.innerText = "Play Again";
 
 // function to change the variable player, this functions purpose is so I have a variable with the name of the player whose turn just went.
 const changePlayer = () => {
@@ -259,18 +268,38 @@ const toCustomize = () => {
   ready.classList.remove("hidden")
 };
 
+
 begin.addEventListener("click", toCustomize);
+
+// all the code for the custimization code.
 let first = document.querySelectorAll(".first")
 first = Array.from(first)
 let second = document.querySelectorAll(".second")
 second = Array.from(second)
 const iconChange1 = (e) => {
   icon1 = e.target.innerText
+  displayIcon()
 }
 const iconChange2 = (e) => {
   icon2 = e.target.innerText
+  displayIcon()
 }
 first.forEach(but => but.addEventListener("click", iconChange1)
 )
 second.forEach(but => but.addEventListener("click", iconChange2)
 )
+const p1Hud = document.querySelector(".player1-hud")
+const p2Hud = document.querySelector(".player2-hud")
+
+const revealBoard = () => {
+  custimize.classList.add("hidden")
+  p1Hud.classList.remove("hidden")
+  p2Hud.classList.remove("hidden")
+  gameBoard.classList.remove("hidden")
+  message.classList.remove("hidden")
+  ready.classList.add("hidden")
+}
+
+
+
+ready.addEventListener("click", revealBoard)

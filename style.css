@@ -28,8 +28,8 @@ header {
 }
 
 h1 {
-  margin: 20px;
-  /* font-family: "Pacifico", sans-serif; */
+  margin: 0 20px;
+  font-size: 60px;
 }
 
 .play-again {
@@ -59,6 +59,12 @@ main {
   color: white;
   border: 5px solid white;
   font-family: "Pacifico", sans-serif;
+}
+.begin:hover {
+  cursor: pointer;
+  width: 100px;
+  height:40px;
+
 }
 
 .game-board {
@@ -188,6 +194,7 @@ input {
   margin: 20px 0 0 0;
   background-color: black;
   color: white;
+  box-shadow: 2px white ;
 }
 .icon-button:hover {
   cursor: pointer;
