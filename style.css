@@ -13,8 +13,9 @@ body {
   height: 100vh;
   width: 100vw;
   margin: 0;
-  background-color: black;
   font-family: "Pacifico", sans-serif;
+  background: url(Blackboard2.jpeg);
+  background-size: 100vw 100vh;
 }
 
 .player-score {
@@ -35,13 +36,14 @@ h1 {
 .play-again {
   height: 32px;
   margin: 10px;
+  background-color: transparent;
 }
 
 .replay-button{
   color: white;
-  background-color: black;
   font-weight: bold;
   border: none;
+  background-color: transparent;
 }
 .replay-button:hover {
   text-decoration: underline;
@@ -55,15 +57,18 @@ main {
   flex-grow: 1;
 }
 .begin {
-  background-color: black;
+  background-color: transparent;
   color: white;
   border: 5px solid white;
   font-family: "Pacifico", sans-serif;
+  width: 200px;
+  height: 100px;
+  font-size: 25px;
 }
 .begin:hover {
   cursor: pointer;
-  width: 100px;
-  height:40px;
+  width: 250px;
+  height: 150px;
 
 }
 
@@ -75,7 +80,7 @@ main {
   grid-row-gap: 15px;
   height: 300px;
   width: 300px;
-  background-color: white;
+  background-color: transparent;
   padding: 0;
 }
 footer {
@@ -97,20 +102,28 @@ aside {
 #box1 {
   grid-column: 1/ span 1;
   grid-row: 1/ span 1;
+  border: 5px solid white;
+  border-style: none solid solid none;
 }
 
 #box2 {
   grid-column: 2/ span 1;
   grid-row: 1/ span 1;
+  border: 5px solid white;
+  border-style: none none solid none;
 }
 #box3 {
   grid-column: 3/ span 1;
   grid-row: 1/ span 1;
+  border: 5px solid white;
+  border-style: none none solid solid;
 }
 
 #box4 {
   grid-column: 1/ span 1;
   grid-row: 2/ span 1;
+  border: 5px solid white;
+  border-style: none solid none none;
 }
 #box5 {
   grid-column: 2/ span 1;
@@ -119,23 +132,31 @@ aside {
 #box6 {
   grid-column: 3/ span 1;
   grid-row: 2/ span 1;
+  border: 5px solid white;
+  border-style: none none none solid;
 }
 
 #box7 {
   grid-column: 1/ span 1;
   grid-row: 3/ span 1;
+  border: 5px solid white;
+  border-style: solid solid none none;
 }
 #box8 {
   grid-column: 2/ span 1;
   grid-row: 3/ span 1;
+  border: 5px solid white;
+  border-style: solid none none none;
 }
 #box9 {
   grid-column: 3/ span 1;
   grid-row: 3/ span 1;
+  border: 5px solid white;
+  border-style: solid none none solid;
 }
 
 .playing-tiles {
-  background-color: black;
+  background-color: none;
   font-size: 60px;
   text-align: center;
   color: white;
@@ -146,7 +167,7 @@ aside {
   width: 98px;
   height: 98px;
   position: relative;
-  border: 2px solid white;
+  border: 5px solid white;
 }
 
 .player-icon {
@@ -160,17 +181,23 @@ aside {
 
 .custimize {
   border: 5px solid white;
-  width: 450px;
-  height: 200px;
+  width: 700px;
+  height: 400px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 20px 20px;
+
 }
+
+ 
 .box {
-  background-color: black;
+  background-color: transparent;
   border: 1px solid white;
   color: white;
+  width: 200px;
+  height: 40px;
+  margin: 20px;
 }
 .box::placeholder {
   color: white;
@@ -180,32 +207,45 @@ aside {
 .name-input1 {
   flex-grow: 1;
   text-align: center;
+  font-size: 40px;
 }
+
 .name-input2 {
   flex-grow: 1;
   text-align: center;
+  font-size: 40px;
 }
+
 input {
   text-align: center;
 }
 .icon-button {
-  width: 30px;
-  height: 30px;
-  margin: 20px 0 0 0;
-  background-color: black;
+  width: 40px;
+  height: 40px;
+  margin: 20px 5px 10px 5px;
+  background-color: transparent;
   color: white;
-  box-shadow: 2px white ;
+  border: 3px solid white;
 }
 .icon-button:hover {
   cursor: pointer;
+  width: 45px;
+  height: 45px;
+  margin: 20px 3px 0 3px;
 }
 .confirm {
-  background-color: black;
+  background-color: transparent;
   color: white;
+  margin: 20px;
+  border: 5px solid white;
 }
 .confirm:hover {
+  width: 100px;
+  height: 35px;
+  margin: 17.8px;
   cursor: pointer;
 }
+
 .hidden {
   display: none;
 }

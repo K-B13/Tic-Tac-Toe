@@ -7,7 +7,9 @@ class Player {
 }
 
 const chalk = new Audio("chalk-sound")
-
+//linking up player scoreboards names
+const p1Score = document.querySelector("#score1")
+const p2Score = document.querySelector("#score2")
 // connecting my tiles via the dom.
 const box1 = document.querySelector("#box1");
 const box2 = document.querySelector("#box2");
@@ -18,6 +20,8 @@ const box6 = document.querySelector("#box6");
 const box7 = document.querySelector("#box7");
 const box8 = document.querySelector("#box8");
 const box9 = document.querySelector("#box9");
+const boxes = Array.from(document.querySelectorAll(".playing-tiles"))
+
 
 // for the custimization screen 
 const display1 = document.querySelector(".display1");
@@ -56,7 +60,7 @@ const displayIcon = () => {
 score1 = 0
 score2 = 0
 // this is going to be used in a function that will change the vairable depending on if turn 1 is true or not.
-let player = "";
+let player = p2Score.innerText;
 
 let playerArray;
 // checking if game over
@@ -106,12 +110,8 @@ const turn = () => {
 
 //function to change the message at the top of the page
 const checkTurn = () => {
+  message.innerText = `It is ${player}'s turn.`
   changePlayer()
-  if (turn1) {
-    message.innerText = "It is player 1's turn."
-  } else {
-    message.innerText = "It is player 2's turn."
-  }
 } 
 
 const chalkSound = () => {
@@ -124,22 +124,23 @@ const chalkSound = () => {
 
 // function in the event listener which makes the icons appear.
 const move = (e) => {
+  e.target.classList.add("flip-in-ver-left")
+  
   let tile = e.target
   let tileIndex = tile.getAttribute(["data-index"])
-  if (tile.innerText === ""){
-    turn()
-    checkTurn()
-    tile.innerText = iconToBoard
-    chalkSound()
-    if(!turn1) {
-      p1.push(tileIndex)
-      p1 = p1.sort()
-    } else {
-      p2.push(tileIndex)
-      p2 = p2.sort()
-    }
-  } 
-  
+    if (tile.innerText === ""){
+      turn()
+      checkTurn()
+      tile.innerText = iconToBoard
+      chalkSound()
+      if(!turn1) {
+        p1.push(tileIndex)
+        p1 = p1.sort()
+      } else {
+        p2.push(tileIndex)
+        p2 = p2.sort()
+    } 
+  }
   currentPlayer()
   endCheck()
   checkDraw()
@@ -148,6 +149,7 @@ const move = (e) => {
 
 const start = () => {
   if (message.innerText === "Click a square to begin"){
+    player = p1Score.innerText
     checkTurn()
   }
 }
@@ -189,6 +191,8 @@ const endCheck = () => {
             return check
             })
             if(check) {
+              footerMessage.classList.remove("tracking-out-contract-bck-bottom")
+              footerMessage.classList.add("focus-in-expand");
               footerMessage.innerText = `${player} has won`
               checkWin = true
               break
@@ -198,7 +202,6 @@ const endCheck = () => {
   } 
 
 // checks if all boxes are filled (well technically checks if p1 has made 5 moves and p2 has made 4 moves)
-
 const checkDraw = () => {
   if(!checkWin){
     if(p1.length === 5 && p2.length === 4){
@@ -223,6 +226,17 @@ const stopGame = () => {
     addScore()
     replay()
   }
+}
+const refreshAnimation = () => {
+  box1.classList.remove("flip-in-ver-left")
+  box2.classList.remove("flip-in-ver-left")
+  box3.classList.remove("flip-in-ver-left")
+  box4.classList.remove("flip-in-ver-left")
+  box5.classList.remove("flip-in-ver-left")
+  box6.classList.remove("flip-in-ver-left")
+  box7.classList.remove("flip-in-ver-left")
+  box8.classList.remove("flip-in-ver-left")
+  box9.classList.remove("flip-in-ver-left")
 }
 // update the scoreboard based on who has won
 const addScore = () => {
@@ -253,19 +267,25 @@ const reset = () => {
   checkWin = false
   p1 = []
   p2 = []
-  footerMessage.innerText = ""
   message.innerText = "Click a square to begin"
   turn1 = true;
   player = ""
+  footerMessage.classList.remove("focus-in-expand");
+  footerMessage.classList.add("tracking-out-contract-bck-bottom")
   changePlayer()
+  refreshAnimation()
 }
+
+const h1 = document.querySelector("h1")
 const custimize = document.querySelector(".custimize");
 const begin = document.querySelector(".begin");
 const ready = document.querySelector(".confirm")
 const toCustomize = () => {
+  custimize.classList.add("slide-in-elliptic-bottom-fwd")
   custimize.classList.remove("hidden")
   begin.classList.add("hidden")
   ready.classList.remove("hidden")
+  h1.classList.add("text-pop-up-left")
 };
 
 
@@ -291,15 +311,37 @@ second.forEach(but => but.addEventListener("click", iconChange2)
 const p1Hud = document.querySelector(".player1-hud")
 const p2Hud = document.querySelector(".player2-hud")
 
+const p1Input = document.querySelector(".p1-input")
+const p2Input = document.querySelector(".p2-input")
+
+
+
 const revealBoard = () => {
   custimize.classList.add("hidden")
   p1Hud.classList.remove("hidden")
+  p1Hud.classList.add("roll-in-blurred-left")
   p2Hud.classList.remove("hidden")
+  p2Hud.classList.add("roll-in-blurred-right")
   gameBoard.classList.remove("hidden")
+  gameBoard.classList.add("slit-in-diagonal-1")
   message.classList.remove("hidden")
   ready.classList.add("hidden")
+  if (p1Input.value) {
+    p1Score.innerText = p1Input.value;
+  }
+  if (p2Input.value){
+    p2Score.innerText = p2Input.value;
+  }
 }
 
-
-
 ready.addEventListener("click", revealBoard)
+
+// box1.addEventListener("mouseover", move);
+// box2.addEventListener("mouseover", move);
+// box3.addEventListener("mouseover", move);
+// box4.addEventListener("mouseover", move);
+// box5.addEventListener("mouseover", move);
+// box6.addEventListener("mouseover", move);
+// box7.addEventListener("mouseover", move);
+// box8.addEventListener("mouseover", move);
+// box9.addEventListener("mouseover", move);
