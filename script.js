@@ -18,24 +18,31 @@ const box6 = document.querySelector("#box6");
 const box7 = document.querySelector("#box7");
 const box8 = document.querySelector("#box8");
 const box9 = document.querySelector("#box9");
+
+// for the custimization screen 
+const display1 = document.querySelector(".display1");
+const display2 = document.querySelector(".display2");
+
 // query selecting useful elements.
-const message = document.querySelector(".message")
-const gameBoard = document.querySelector(".game-board")
-const footerMessage = document.querySelector("footer h2")
-const player1 = document.querySelector("#score1")
-const player2 = document.querySelector("#score2")
-const scoreStat1 = document.querySelector(".score-stat1")
-const scoreStat2 = document.querySelector(".score-stat2")
-const playAgain  = document.querySelector(".play-again")
+const message = document.querySelector(".message");
+const gameBoard = document.querySelector(".game-board");
+const footerMessage = document.querySelector("footer h2");
+const player1 = document.querySelector("#score1");
+const player2 = document.querySelector("#score2");
+const scoreStat1 = document.querySelector(".score-stat1");
+const scoreStat2 = document.querySelector(".score-stat2");
+const playAgain  = document.querySelector(".play-again");
 
 // declaring to variables
 // this one will be used to change which icon is being submitted
 let iconToBoard = "";
+
 // this is used to determine whose turn it is
 let turn1 = true;
+
 // temporary while I sort out some other features hope to make it so icons change
-const icon1 = "X";
-const icon2 = "O";
+let icon1 = "X";
+let icon2 = "O";
 
 score1 = 0
 score2 = 0
@@ -48,6 +55,7 @@ let playerArray;
 //recording players moves
 p1 = [];
 p2 = [];
+
 //Array of all the winning combinations
 const winArray = [
   ["0", "1", "2"],
@@ -59,12 +67,14 @@ const winArray = [
   ["3", "4", "5"],
   ["6", "7", "8"],
 ]
+
 // create button for play again
 again = document.createElement("button");
 playAgain.append(again);
 again.classList.add("replay-button");
 playAgain.classList.add("hidden")
 again.innerText = "Reset";
+
 // function to change the variable player, this functions purpose is so I have a variable with the name of the player whose turn just went.
 const changePlayer = () => {
   if(!turn1) {
@@ -132,6 +142,7 @@ const start = () => {
     checkTurn()
   }
 }
+
 const clickBox = () => {
   box1.addEventListener("click", move);
   box2.addEventListener("click", move);
@@ -148,6 +159,7 @@ gameBoard.addEventListener("click", start)
 
 let checkWin = false
 let check = false
+
 // adding each players move into a seperate array I plan on using this to ultimatly compare against the win conditions to check to see if someone has won
 const currentPlayer = () => {
   if(!turn1) {
@@ -158,10 +170,11 @@ const currentPlayer = () => {
     return playerArray
   }
 }
+
 // comparing the player Arrays with the win conditions. Loops through every win condition. If every value in the win condition is found in a player Array then the game ends
 const endCheck = () => {
   if (playerArray.length > 2) {
-    for(let i = 0; i<winArray.length; i++){
+    for(let i = 0; i < winArray.length; i++){
           winArray[i].every(el => {
             check =  playerArray.includes(el)
             return check
@@ -176,6 +189,7 @@ const endCheck = () => {
   } 
 
 // checks if all boxes are filled (well technically checks if p1 has made 5 moves and p2 has made 4 moves)
+
 const checkDraw = () => {
   if(!checkWin){
     if(p1.length === 5 && p2.length === 4){
@@ -185,6 +199,7 @@ const checkDraw = () => {
   }
 }
 
+// stops the game from continuing after someone has already won. 
 const stopGame = () => {
   if (checkWin) {
     box1.removeEventListener("click", move);
@@ -211,12 +226,14 @@ const addScore = () => {
   }
 }
 
+// reveals play again button
 const replay = () => {
   playAgain.classList.remove("hidden")
   again.addEventListener("click", reset)
   message.innerText = `Click play again to restart`
 }
 
+// resets the board
 const reset = () => {
   clickBox()
   playAgain.classList.add("hidden")
@@ -233,4 +250,27 @@ const reset = () => {
   player = ""
   changePlayer()
 }
+const custimize = document.querySelector(".custimize");
+const begin = document.querySelector(".begin");
+const ready = document.querySelector(".confirm")
+const toCustomize = () => {
+  custimize.classList.remove("hidden")
+  begin.classList.add("hidden")
+  ready.classList.remove("hidden")
+};
 
+begin.addEventListener("click", toCustomize);
+let first = document.querySelectorAll(".first")
+first = Array.from(first)
+let second = document.querySelectorAll(".second")
+second = Array.from(second)
+const iconChange1 = (e) => {
+  icon1 = e.target.innerText
+}
+const iconChange2 = (e) => {
+  icon2 = e.target.innerText
+}
+first.forEach(but => but.addEventListener("click", iconChange1)
+)
+second.forEach(but => but.addEventListener("click", iconChange2)
+)

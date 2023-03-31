@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
-
 * {
   box-sizing: border-box;
 }
@@ -15,6 +14,7 @@ body {
   width: 100vw;
   margin: 0;
   background-color: black;
+  font-family: "Pacifico", sans-serif;
 }
 
 .player-score {
@@ -29,7 +29,7 @@ header {
 
 h1 {
   margin: 20px;
-  font-family: "Pacifico", sans-serif;
+  /* font-family: "Pacifico", sans-serif; */
 }
 
 .play-again {
@@ -54,6 +54,12 @@ main {
   width: 100%;
   flex-grow: 1;
 }
+.begin {
+  background-color: black;
+  color: white;
+  border: 5px solid white;
+  font-family: "Pacifico", sans-serif;
+}
 
 .game-board {
   display: grid;
@@ -64,7 +70,6 @@ main {
   height: 300px;
   width: 300px;
   background-color: white;
-  /* border: 10px dotted white; */
   padding: 0;
 }
 footer {
@@ -147,6 +152,53 @@ aside {
   margin: 0 0 10px 0;
 }
 
+.custimize {
+  border: 5px solid white;
+  width: 450px;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px 20px;
+}
+.box {
+  background-color: black;
+  border: 1px solid white;
+  color: white;
+}
+.box::placeholder {
+  color: white;
+}
+
+
+.name-input1 {
+  flex-grow: 1;
+  text-align: center;
+}
+.name-input2 {
+  flex-grow: 1;
+  text-align: center;
+}
+input {
+  text-align: center;
+}
+.icon-button {
+  width: 30px;
+  height: 30px;
+  margin: 20px 0 0 0;
+  background-color: black;
+  color: white;
+}
+.icon-button:hover {
+  cursor: pointer;
+}
+.confirm {
+  background-color: black;
+  color: white;
+}
+.confirm:hover {
+  cursor: pointer;
+}
 .hidden {
   display: none;
 }

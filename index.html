@@ -14,15 +14,43 @@
     <p class="play-again"></p>
   </header>
   
-  <h2 class="message">Click a square to begin </h2>
+  <h2 class="message hidden">Click a square to begin </h2>
   <main>
-    <aside>
+    <button class="begin">Play Game</button>
+    <div class="custimize hidden">
+      <div class="name-input1">
+        <form>
+          <label>Player 1 Name</label>
+          <input type="text" placeholder="Change Player 1 Name" class="box">
+        </form>
+        <button class="icon-button first">X</button>
+        <button class="icon-button first">O</button>
+        <button class="icon-button first">!</button>
+        <button class="icon-button first">#</button>
+        <button class="icon-button first">*</button>
+        <p class="display1">X</p>
+      </div>
+      <div class="name-input2">
+        <form>
+        <label>Player 2 Name</label>
+          <input type="text" placeholder="Change Player 2 Name" class="box">
+        </form>
+        <button class="icon-button second">X</button>
+        <button class="icon-button second">O</button>
+        <button class="icon-button second">!</button>
+        <button class="icon-button second">#</button>
+        <button class="icon-button second">*</button>
+        <p class="display2">O</p>
+      </div>
+    </div>
+
+    <aside class="hidden">
       <h2 class="player-score" id="score1">Player 1</h2>
       <p>Score</p>
       <p class="score-stat1">0</p>
       <p class="player-icon">X</p>
     </aside>
-    <div class ="game-board">
+    <div class ="game-board hidden">
       <div class ="playing-tiles" data-index = "0" id="box1"></div>
       <div class ="playing-tiles" data-index = "1" id="box2"></div>
       <div class ="playing-tiles" data-index = "2" id="box3"></div>
@@ -33,13 +61,14 @@
       <div class ="playing-tiles" data-index = "7" id="box8"></div>
       <div class ="playing-tiles" data-index = "8" id="box9"></div>
     </div>
-    <aside>
+    <aside class="hidden">
       <h2 class="player-score" id="score2">Player 2</h2>
       <p>Score</p>
       <p class="score-stat2">0</p>
       <p class="player-icon">O</p>
     </aside>
   </main>
+  <button class="confirm hidden">Confirm</button>
   <footer>
     <h2></h2>
   </footer>
