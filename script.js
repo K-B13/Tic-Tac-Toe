@@ -99,6 +99,7 @@ const checkTurn = () => {
 
 // function for the sound when each tile is selected.
 const chalkSound = () => {
+  chalk.volume = 0.2;
   chalk.play()
   setTimeout(() => {
       chalk.pause();

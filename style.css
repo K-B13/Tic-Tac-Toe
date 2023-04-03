@@ -14,8 +14,11 @@ body {
   width: 100vw;
   margin: 0;
   font-family: "Pacifico", sans-serif;
-  background: url(Blackboard2.jpeg);
-  background-size: 100vw 100vh;
+  background-color: black;
+  background: url(Blackboard.png);
+  background-size: cover;
+  background-position: center;
+
 }
 
 .player-score {
@@ -36,13 +39,14 @@ article {
 }
 
 h1 {
-  margin: 0 20px;
+  margin: 15px 20px 0 20px;
   font-size: 60px;
 }
 .complete-reset {
   background-color: transparent;
   border: none;
   color: white;
+  margin: 50px 0 0 0;
 }
 .complete-reset:hover {
   font-weight: bold;
@@ -62,7 +66,7 @@ h1 {
   background-color: transparent;
 }
 .replay-button:hover {
-  text-decoration: underline;
+  border: 2px solid white;
   cursor: pointer;
 }
 main {
@@ -184,6 +188,7 @@ aside {
   font-size: 30px;
   font-weight: bold;
 }
+
 .message {
   height: 60px;
   margin: 0 0 10px 0;
@@ -200,7 +205,6 @@ aside {
 
 }
 
- 
 .box {
   background-color: transparent;
   border: 1px solid white;
@@ -212,7 +216,6 @@ aside {
 .box::placeholder {
   color: white;
 }
-
 
 .name-input1 {
   flex-grow: 1;
