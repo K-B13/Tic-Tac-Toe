@@ -1,17 +1,8 @@
 const startScreen = document.querySelector(".complete-reset")
 const chalk = new Audio("chalk-sound")
-// connecting my tiles via the dom.
-const box1 = document.querySelector("#box1");
-const box2 = document.querySelector("#box2");
-const box3 = document.querySelector("#box3");
-const box4 = document.querySelector("#box4");
-const box5 = document.querySelector("#box5");
-const box6 = document.querySelector("#box6");
-const box7 = document.querySelector("#box7");
-const box8 = document.querySelector("#box8");
-const box9 = document.querySelector("#box9");
-const boxes = Array.from(document.querySelectorAll(".playing-tiles"))
 
+//linking the boxes to JS via the DOM
+const boxes = Array.from(document.querySelectorAll(".playing-tiles"))
 
 // for the custimization screen 
 const display1 = document.querySelector(".display1");
@@ -33,6 +24,7 @@ const show2 = document.querySelector(".show-icon2")
 let icon1 = "X";
 let icon2 = "O";
 
+// let cookie1 = document.cookie
 // declaring to variables
 // this one will be used to change which icon is being submitted
 let iconToBoard = icon1;
@@ -48,17 +40,15 @@ const displayIcon = () => {
   show2.innerText = icon2
 }
 
-
 // set the scores to 0
 score1 = 0
 score2 = 0
 // this is going to be used in a function that will change the vairable depending on if turn 1 is true or not.
 let player = "";
-
 let playerArray;
 // checking if game over
 
-//recording players moves
+//recording players moves to compare with the win conditions to check for a win, also will be used to determine if there is a draw.
 p1 = [];
 p2 = [];
 
@@ -122,8 +112,8 @@ const move = (e) => {
   
   let tile = e.target
   let tileIndex = tile.getAttribute(["data-index"])
-    if (tile.innerText === "" || tile.style.opacity === "0.4"){
-      tile.style.opacity = "1";
+    if (tile.innerText === "" || tile.style.color === "rgba(255, 255, 255, 0.4)") {
+      tile.style.color = "rgba(255, 255, 255, 1)";
       tile.innerText = iconToBoard
       turn()
       checkTurn()
@@ -141,6 +131,8 @@ const move = (e) => {
   checkDraw()
   stopGame()
 }
+
+
 
 // Not hugely important just makes it so if on first move you click a grid gap instead of a tile it displays player one's turn.
 const start = () => {
@@ -283,6 +275,13 @@ const reset = () => {
   refreshAnimation()
   iconToBoard = icon1
   removeWinAnimation()
+  gameBoard.classList.remove("slit-in-diagonal-1")
+  gameBoard.classList.add("swing-out-bottom-bck")
+  // setting an interval so there is a delay so the animation is visable
+  setInterval(() => {
+    gameBoard.classList.remove("swing-out-bottom-bck")
+    gameBoard.classList.add("slit-in-diagonal-1")
+  }, 1200)
 }
 
 //linking dom elements related to the click of the start game button
@@ -326,8 +325,10 @@ const iconChange2 = (e) => {
     alert("Players cannot have matching icons")
   }
 }
+//adds the icon change 1 function to the buttons under the player 1 section in the custimisation screen.
 first.forEach(but => but.addEventListener("click", iconChange1)
 )
+//adds the icon change 2 function to the buttons under the player 2 section in the custimisation screen.
 second.forEach(but => but.addEventListener("click", iconChange2)
 )
 const p1Hud = document.querySelector(".player1-hud")
@@ -339,6 +340,7 @@ const p2Input = document.querySelector(".p2-input")
 
 // function to reveal the board once the user is done with customisation. It also grabs the names input on the customisation screen and preps for the first move.
 const revealBoard = () => {
+  ready.classList.add("hidden")
   custimize.classList.add("hidden")
   p1Hud.classList.remove("hidden")
   p1Hud.classList.add("roll-in-blurred-left")
@@ -347,7 +349,6 @@ const revealBoard = () => {
   gameBoard.classList.remove("hidden")
   gameBoard.classList.add("slit-in-diagonal-1")
   message.classList.remove("hidden")
-  ready.classList.add("hidden")
   startScreen.classList.remove("hidden")
   if (p1Input.value) {
     player1.innerText = p1Input.value;
@@ -363,29 +364,32 @@ const revealBoard = () => {
 
 ready.addEventListener("click", revealBoard)
 
+//creates a hover effect that shows the icon that will be input if clicked but shows it slightly faded to make it clear that it hasnt been input yet.
 const hoverEffect = (e) => {
   let tile = e.target
   if(!checkWin){
     if (tile.innerText === "") {
-     tile.style.opacity = "0.4";
+     tile.style.color = "rgba(255, 255, 255, 0.4)";
       tile.innerText = iconToBoard;
     }
   }
 }
+// When the mouse moves off the tile this function clears the tile of the opaque icon on it however doesn't do anything to tiles which have already been clicked.
 const removeHover = (e) => {
   let tile = e.target
-  if (tile.style.opacity === "0.4") {
+  if (tile.style.color === "rgba(255, 255, 255, 0.4)") {
     tile.innerText = "";
-    tile.style.opacity = "1";
+    tile.style.color = "rgba(255, 255, 255, 1)";
   }
 }
+// adds the mouseover effect as an event listener to all the tiles
 const addMouseOverEffect = () => {
   boxes.forEach(arr => {
     arr.addEventListener("mouseover", hoverEffect)
 })
 }
 addMouseOverEffect()
-
+// adds the remove mouse effect function to the tiles
 const removeMouseOverEffect = () => {
   boxes.forEach(arr => {
     arr.addEventListener("mouseout", removeHover)
@@ -393,6 +397,7 @@ const removeMouseOverEffect = () => {
 }
 removeMouseOverEffect()
 
+// function for going back to the start screen and should reset everything as it was at the beginning.
 const refresh = () => {
   p1Hud.classList.add("hidden")
   p1Hud.classList.remove("roll-in-blurred-left")
@@ -415,6 +420,7 @@ const refresh = () => {
   reset()
 }
 
+// adds the refresh function to the start screen button.
 startScreen.addEventListener("click", refresh)
 
-// /To do on Monday; look at storing on local hardrive; maybe computer; if i have time some more animations; readme
+// /To do on Monday; readme
