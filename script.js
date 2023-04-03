@@ -406,9 +406,14 @@ const refresh = () => {
   score2 = 0
   scoreStat1.innerText = score1
   scoreStat2.innerText = score2
+  player1.innerText = "Player1"
+  player2.innerText = "Player2"
+  icon1 = "X"
+  icon2 = "O"
+  displayIcon()
   reset()
 }
 
 startScreen.addEventListener("click", refresh)
 
-// /To do on Monday; add in the showing of the winning combo; add in adjustable sound; look at storing on local hardrive; maybe computer; if i have time some more animations; readme
+// /To do on Monday; add in the showing of the winning combo; look at storing on local hardrive; maybe computer; if i have time some more animations; readme
