@@ -6,10 +6,8 @@ class Player {
    }
 }
 
+const startScreen = document.querySelector(".complete-reset")
 const chalk = new Audio("chalk-sound")
-//linking up player scoreboards names
-const p1Score = document.querySelector("#score1")
-const p2Score = document.querySelector("#score2")
 // connecting my tiles via the dom.
 const box1 = document.querySelector("#box1");
 const box2 = document.querySelector("#box2");
@@ -39,16 +37,16 @@ const playAgain  = document.querySelector(".play-again");
 const show1 = document.querySelector(".show-icon1")
 const show2 = document.querySelector(".show-icon2")
 
-// declaring to variables
-// this one will be used to change which icon is being submitted
-let iconToBoard = "";
-
-// this is used to determine whose turn it is
-let turn1 = true;
-
 // temporary while I sort out some other features hope to make it so icons change
 let icon1 = "X";
 let icon2 = "O";
+
+// declaring to variables
+// this one will be used to change which icon is being submitted
+let iconToBoard = icon1;
+
+// this is used to determine whose turn it is
+let turn1 = true;
 
 const displayIcon = () => {
   display1.innerText = icon1
@@ -57,10 +55,12 @@ const displayIcon = () => {
   show2.innerText = icon2
 }
 
+
+
 score1 = 0
 score2 = 0
 // this is going to be used in a function that will change the vairable depending on if turn 1 is true or not.
-let player = p2Score.innerText;
+let player = "";
 
 let playerArray;
 // checking if game over
@@ -100,10 +100,10 @@ const changePlayer = () => {
 //function which changes which icon is being submitted and changes the turn1 and determines which icon is displayed.
 const turn = () => {
   if(turn1){
-    iconToBoard = icon1;
+    iconToBoard = icon2;
     turn1 = false;
   } else {
-    iconToBoard = icon2;
+    iconToBoard = icon1;
     turn1 = true;
     }
 }
@@ -128,10 +128,11 @@ const move = (e) => {
   
   let tile = e.target
   let tileIndex = tile.getAttribute(["data-index"])
-    if (tile.innerText === ""){
+    if (tile.innerText === "" || tile.style.opacity === "0.4"){
+      tile.style.opacity = "1";
+      tile.innerText = iconToBoard
       turn()
       checkTurn()
-      tile.innerText = iconToBoard
       chalkSound()
       if(!turn1) {
         p1.push(tileIndex)
@@ -149,7 +150,7 @@ const move = (e) => {
 
 const start = () => {
   if (message.innerText === "Click a square to begin"){
-    player = p1Score.innerText
+    player = player1.innerText
     checkTurn()
   }
 }
@@ -206,7 +207,10 @@ const checkDraw = () => {
   if(!checkWin){
     if(p1.length === 5 && p2.length === 4){
       footerMessage.innerText = "The game has ended as a draw"
+      footerMessage.classList.remove("tracking-out-contract-bck-bottom")
+      footerMessage.classList.add("focus-in-expand");
       replay()
+      
     }
   }
 }
@@ -274,6 +278,7 @@ const reset = () => {
   footerMessage.classList.add("tracking-out-contract-bck-bottom")
   changePlayer()
   refreshAnimation()
+  iconToBoard = icon1
 }
 
 const h1 = document.querySelector("h1")
@@ -296,13 +301,23 @@ let first = document.querySelectorAll(".first")
 first = Array.from(first)
 let second = document.querySelectorAll(".second")
 second = Array.from(second)
+
+
 const iconChange1 = (e) => {
-  icon1 = e.target.innerText
-  displayIcon()
+  if (e.target.innerText !== icon2){
+    icon1 = e.target.innerText
+    displayIcon()
+  } else {
+    alert("Players cannot have matching icons")
+  }
 }
 const iconChange2 = (e) => {
-  icon2 = e.target.innerText
-  displayIcon()
+  if (e.target.innerText !== icon1){
+    icon2 = e.target.innerText
+    displayIcon()
+  } else {
+    alert("Players cannot have matching icons")
+  }
 }
 first.forEach(but => but.addEventListener("click", iconChange1)
 )
@@ -326,22 +341,74 @@ const revealBoard = () => {
   gameBoard.classList.add("slit-in-diagonal-1")
   message.classList.remove("hidden")
   ready.classList.add("hidden")
+  startScreen.classList.remove("hidden")
   if (p1Input.value) {
-    p1Score.innerText = p1Input.value;
+    player1.innerText = p1Input.value;
   }
   if (p2Input.value){
-    p2Score.innerText = p2Input.value;
+    player2.innerText = p2Input.value;
   }
+  iconToBoard = icon1
+  player = player2.innerText
+  p1Input.value = ""
+  p2Input.value = ""
 }
 
 ready.addEventListener("click", revealBoard)
 
-// box1.addEventListener("mouseover", move);
-// box2.addEventListener("mouseover", move);
-// box3.addEventListener("mouseover", move);
-// box4.addEventListener("mouseover", move);
-// box5.addEventListener("mouseover", move);
-// box6.addEventListener("mouseover", move);
-// box7.addEventListener("mouseover", move);
-// box8.addEventListener("mouseover", move);
-// box9.addEventListener("mouseover", move);
+const hoverEffect = (e) => {
+  let tile = e.target
+  if(!checkWin){
+    if (tile.innerText === "") {
+     tile.style.opacity = "0.4";
+      tile.innerText = iconToBoard;
+    }
+  }
+}
+const removeHover = (e) => {
+  let tile = e.target
+  if (tile.style.opacity === "0.4") {
+    tile.innerText = "";
+    tile.style.opacity = "1";
+  }
+}
+box1.addEventListener("mouseover", hoverEffect);
+box2.addEventListener("mouseover", hoverEffect);
+box3.addEventListener("mouseover", hoverEffect);
+box4.addEventListener("mouseover", hoverEffect);
+box5.addEventListener("mouseover", hoverEffect);
+box6.addEventListener("mouseover", hoverEffect);
+box7.addEventListener("mouseover", hoverEffect);
+box8.addEventListener("mouseover", hoverEffect);
+box9.addEventListener("mouseover", hoverEffect);
+
+box1.addEventListener("mouseout", removeHover);
+box2.addEventListener("mouseout", removeHover);
+box3.addEventListener("mouseout", removeHover);
+box4.addEventListener("mouseout", removeHover);
+box5.addEventListener("mouseout", removeHover);
+box6.addEventListener("mouseout", removeHover);
+box7.addEventListener("mouseout", removeHover);
+box8.addEventListener("mouseout", removeHover);
+box9.addEventListener("mouseout", removeHover);
+
+const refresh = () => {
+  p1Hud.classList.add("hidden")
+  p1Hud.classList.remove("roll-in-blurred-left")
+  p2Hud.classList.add("hidden")
+  p2Hud.classList.remove("roll-in-blurred-right")
+  gameBoard.classList.add("hidden")
+  gameBoard.classList.remove("slit-in-diagonal-1")
+  message.classList.add("hidden")
+  startScreen.classList.add("hidden")
+  begin.classList.remove("hidden")
+  score1 = 0
+  score2 = 0
+  scoreStat1.innerText = score1
+  scoreStat2.innerText = score2
+  reset()
+}
+
+startScreen.addEventListener("click", refresh)
+
+// /To do on Monday; add in the showing of the winning combo; add in adjustable sound; look at storing on local hardrive; maybe computer; if i have time some more animations; readme

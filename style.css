@@ -24,15 +24,31 @@ body {
 }
 
 header {
+  display: flex;
+  justify-content: space-between;
   height: 150px;
   text-align: center;
+  width: 100vw;
+}
+
+article {
+  flex-grow: 1;
 }
 
 h1 {
   margin: 0 20px;
   font-size: 60px;
 }
-
+.complete-reset {
+  background-color: transparent;
+  border: none;
+  color: white;
+}
+.complete-reset:hover {
+  font-weight: bold;
+  border: 5px solid white;
+  cursor: pointer;
+}
 .play-again {
   height: 32px;
   margin: 10px;
@@ -162,12 +178,6 @@ aside {
   color: white;
   padding: 5px;
   cursor: pointer;
-}
-.playing-tiles:hover {
-  width: 98px;
-  height: 98px;
-  position: relative;
-  border: 5px solid white;
 }
 
 .player-icon {
