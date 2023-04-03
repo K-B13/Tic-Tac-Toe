@@ -370,7 +370,7 @@ const hoverEffect = (e) => {
   let tile = e.target
   if(!checkWin){
     if (tile.innerText === "") {
-     tile.style.color = "rgba(255, 255, 255, 0.4)";
+      tile.style.color = "rgba(255, 255, 255, 0.4)";
       tile.innerText = iconToBoard;
     }
   }
