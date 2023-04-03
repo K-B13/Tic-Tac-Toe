@@ -1,11 +1,3 @@
-// thinking later to make the players custimizable and was going to use classes to accomplish this
-class Player {
-   constructor(name, icon){
-    this.name = name;
-    this.icon = icon;
-   }
-}
-
 const startScreen = document.querySelector(".complete-reset")
 const chalk = new Audio("chalk-sound")
 // connecting my tiles via the dom.
@@ -48,6 +40,7 @@ let iconToBoard = icon1;
 // this is used to determine whose turn it is
 let turn1 = true;
 
+// function for displaying the selected icons on the customisation screen and on the score boards.
 const displayIcon = () => {
   display1.innerText = icon1
   display2.innerText = icon2 
@@ -56,7 +49,7 @@ const displayIcon = () => {
 }
 
 
-
+// set the scores to 0
 score1 = 0
 score2 = 0
 // this is going to be used in a function that will change the vairable depending on if turn 1 is true or not.
@@ -114,6 +107,7 @@ const checkTurn = () => {
   changePlayer()
 } 
 
+// function for the sound when each tile is selected.
 const chalkSound = () => {
   chalk.play()
   setTimeout(() => {
@@ -148,31 +142,28 @@ const move = (e) => {
   stopGame()
 }
 
+// Not hugely important just makes it so if on first move you click a grid gap instead of a tile it displays player one's turn.
 const start = () => {
   if (message.innerText === "Click a square to begin"){
     player = player1.innerText
     checkTurn()
   }
 }
-
-const clickBox = () => {
-  box1.addEventListener("click", move);
-  box2.addEventListener("click", move);
-  box3.addEventListener("click", move);
-  box4.addEventListener("click", move);
-  box5.addEventListener("click", move);
-  box6.addEventListener("click", move);
-  box7.addEventListener("click", move);
-  box8.addEventListener("click", move);
-  box9.addEventListener("click", move);
-}
-clickBox()
 gameBoard.addEventListener("click", start)
 
+//Adds the click event listener to every tile with the function that contains the logic to display the icons.
+const clickBox = () => {
+  boxes.forEach(arr => {
+    arr.addEventListener("click", move)
+  })
+}
+clickBox()
+
+// some variables I will use to determine whether the game has been won or not.
 let checkWin = false
 let check = false
 
-// adding each players move into a seperate array I plan on using this to ultimatly compare against the win conditions to check to see if someone has won
+// adding each players move into a seperate array I plan on using this to ultimatly compare against the win conditions to check to see if someone has won.
 const currentPlayer = () => {
   if(!turn1) {
     playerArray = p1
@@ -193,7 +184,7 @@ const addWinAnimation = () => {
     boxes[arr].classList.add("text-shadow-pop-tr")
   })
 }
-
+// removing the win animation so I can reset it for next game.
 const removeWinAnimation = () => {
   winCombo.forEach(arr => {
     arr = parseInt(arr)
@@ -201,7 +192,7 @@ const removeWinAnimation = () => {
   })
 }
 
-// comparing the player Arrays with the win conditions. Loops through every win condition. If every value in the win condition is found in a player Array then the game ends
+// comparing the player Arrays with the win conditions. Loops through every win condition. If every value in the win condition is found in a player Array then the game ends. Also deals with the animation of the footer message and adds animation to winning squares
 const endCheck = () => {
   if (playerArray.length > 2) {
     for(let i = 0; i < winArray.length; i++){
@@ -247,19 +238,14 @@ const stopGame = () => {
   replay()
 }
 }
-
+// removes the animation on each tile when selected so I can readd later when they are clicked.
 const refreshAnimation = () => {
-  box1.classList.remove("flip-in-ver-left")
-  box2.classList.remove("flip-in-ver-left")
-  box3.classList.remove("flip-in-ver-left")
-  box4.classList.remove("flip-in-ver-left")
-  box5.classList.remove("flip-in-ver-left")
-  box6.classList.remove("flip-in-ver-left")
-  box7.classList.remove("flip-in-ver-left")
-  box8.classList.remove("flip-in-ver-left")
-  box9.classList.remove("flip-in-ver-left")
+  boxes.forEach(arr => {
+    arr.classList.remove("flip-in-ver-left")
+  })  
 }
-// update the scoreboard based on who has won
+
+// update the scoreboard based on who has won.
 const addScore = () => {
   if(player === player1.innerText){
     score1 = score1 + 1
@@ -270,7 +256,7 @@ const addScore = () => {
   }
 }
 
-// reveals play again button
+// reveals play again button.
 const replay = () => {
   playAgain.classList.remove("hidden")
   again.addEventListener("click", reset)
@@ -299,10 +285,13 @@ const reset = () => {
   removeWinAnimation()
 }
 
+//linking dom elements related to the click of the start game button
 const h1 = document.querySelector("h1")
 const custimize = document.querySelector(".custimize");
 const begin = document.querySelector(".begin");
 const ready = document.querySelector(".confirm")
+
+// revealing the customise screen when the start game button is selected.
 const toCustomize = () => {
   custimize.classList.add("slide-in-elliptic-bottom-fwd")
   custimize.classList.remove("hidden")
@@ -314,13 +303,13 @@ const toCustomize = () => {
 
 begin.addEventListener("click", toCustomize);
 
-// all the code for the custimization code.
+// all the code for the custimization code. Array of all the p1 buttons and p2 buttons.
 let first = document.querySelectorAll(".first")
 first = Array.from(first)
 let second = document.querySelectorAll(".second")
 second = Array.from(second)
 
-
+// iconChange1 and iconChange2 are functions that change all relevant information based on the icon selected by the player in the customisation screen. Also stops the two players having the same icon.
 const iconChange1 = (e) => {
   if (e.target.innerText !== icon2){
     icon1 = e.target.innerText
@@ -348,7 +337,7 @@ const p1Input = document.querySelector(".p1-input")
 const p2Input = document.querySelector(".p2-input")
 
 
-
+// function to reveal the board once the user is done with customisation. It also grabs the names input on the customisation screen and preps for the first move.
 const revealBoard = () => {
   custimize.classList.add("hidden")
   p1Hud.classList.remove("hidden")
@@ -390,25 +379,19 @@ const removeHover = (e) => {
     tile.style.opacity = "1";
   }
 }
-box1.addEventListener("mouseover", hoverEffect);
-box2.addEventListener("mouseover", hoverEffect);
-box3.addEventListener("mouseover", hoverEffect);
-box4.addEventListener("mouseover", hoverEffect);
-box5.addEventListener("mouseover", hoverEffect);
-box6.addEventListener("mouseover", hoverEffect);
-box7.addEventListener("mouseover", hoverEffect);
-box8.addEventListener("mouseover", hoverEffect);
-box9.addEventListener("mouseover", hoverEffect);
+const addMouseOverEffect = () => {
+  boxes.forEach(arr => {
+    arr.addEventListener("mouseover", hoverEffect)
+})
+}
+addMouseOverEffect()
 
-box1.addEventListener("mouseout", removeHover);
-box2.addEventListener("mouseout", removeHover);
-box3.addEventListener("mouseout", removeHover);
-box4.addEventListener("mouseout", removeHover);
-box5.addEventListener("mouseout", removeHover);
-box6.addEventListener("mouseout", removeHover);
-box7.addEventListener("mouseout", removeHover);
-box8.addEventListener("mouseout", removeHover);
-box9.addEventListener("mouseout", removeHover);
+const removeMouseOverEffect = () => {
+  boxes.forEach(arr => {
+    arr.addEventListener("mouseout", removeHover)
+  })
+}
+removeMouseOverEffect()
 
 const refresh = () => {
   p1Hud.classList.add("hidden")
@@ -434,4 +417,4 @@ const refresh = () => {
 
 startScreen.addEventListener("click", refresh)
 
-// /To do on Monday; add in the showing of the winning combo; look at storing on local hardrive; maybe computer; if i have time some more animations; readme
+// /To do on Monday; look at storing on local hardrive; maybe computer; if i have time some more animations; readme
