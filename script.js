@@ -183,10 +183,29 @@ const currentPlayer = () => {
   }
 }
 
+//storing the winning indexes so I can add animation
+let winCombo = []
+
+//function to add animation to the winning combo.
+const addWinAnimation = () => {
+  winCombo.forEach(arr => {
+    arr = parseInt(arr)
+    boxes[arr].classList.add("text-shadow-pop-tr")
+  })
+}
+
+const removeWinAnimation = () => {
+  winCombo.forEach(arr => {
+    arr = parseInt(arr)
+    boxes[arr].classList.remove("text-shadow-pop-tr")
+  })
+}
+
 // comparing the player Arrays with the win conditions. Loops through every win condition. If every value in the win condition is found in a player Array then the game ends
 const endCheck = () => {
   if (playerArray.length > 2) {
     for(let i = 0; i < winArray.length; i++){
+          winCombo = winArray[i]
           winArray[i].every(el => {
             check =  playerArray.includes(el)
             return check
@@ -194,7 +213,9 @@ const endCheck = () => {
             if(check) {
               footerMessage.classList.remove("tracking-out-contract-bck-bottom")
               footerMessage.classList.add("focus-in-expand");
-              footerMessage.innerText = `${player} has won`
+              addWinAnimation()
+              footerMessage.innerText
+               = `${player} has won`
               checkWin = true
               break
             }
@@ -215,22 +236,18 @@ const checkDraw = () => {
   }
 }
 
+
 // stops the game from continuing after someone has already won. 
 const stopGame = () => {
   if (checkWin) {
-    box1.removeEventListener("click", move);
-    box2.removeEventListener("click", move);
-    box3.removeEventListener("click", move);
-    box4.removeEventListener("click", move);
-    box5.removeEventListener("click", move);
-    box6.removeEventListener("click", move);
-    box7.removeEventListener("click", move);
-    box8.removeEventListener("click", move);
-    box9.removeEventListener("click", move);
-    addScore()
-    replay()
-  }
+    boxes.forEach(arr => {
+   arr.removeEventListener("click", move)
+  })
+  addScore()
+  replay()
 }
+}
+
 const refreshAnimation = () => {
   box1.classList.remove("flip-in-ver-left")
   box2.classList.remove("flip-in-ver-left")
@@ -279,6 +296,7 @@ const reset = () => {
   changePlayer()
   refreshAnimation()
   iconToBoard = icon1
+  removeWinAnimation()
 }
 
 const h1 = document.querySelector("h1")
